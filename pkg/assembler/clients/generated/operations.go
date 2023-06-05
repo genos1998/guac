@@ -804,6 +804,16 @@ type AllCertifyVulnMetadataVulnerabilityMetaData struct {
 	Origin string `json:"origin"`
 	// GUAC collector for the document
 	Collector string `json:"collector"`
+	// Details of Vulnerability
+	Details *string `json:"details"`
+	// Summary of Vulnerability
+	Summary *string `json:"summary"`
+	// CVE of Vulnerability
+	Vulnerability *string `json:"vulnerability"`
+	// Severity of Vulnerability
+	Severity *string `json:"severity"`
+	// Fixed Version of Vulnerability
+	FixedVersion *string `json:"fixedVersion"`
 }
 
 // GetDbUri returns AllCertifyVulnMetadataVulnerabilityMetaData.DbUri, and is useful for accessing the field via an interface.
@@ -830,6 +840,25 @@ func (v *AllCertifyVulnMetadataVulnerabilityMetaData) GetOrigin() string { retur
 
 // GetCollector returns AllCertifyVulnMetadataVulnerabilityMetaData.Collector, and is useful for accessing the field via an interface.
 func (v *AllCertifyVulnMetadataVulnerabilityMetaData) GetCollector() string { return v.Collector }
+
+// GetDetails returns AllCertifyVulnMetadataVulnerabilityMetaData.Details, and is useful for accessing the field via an interface.
+func (v *AllCertifyVulnMetadataVulnerabilityMetaData) GetDetails() *string { return v.Details }
+
+// GetSummary returns AllCertifyVulnMetadataVulnerabilityMetaData.Summary, and is useful for accessing the field via an interface.
+func (v *AllCertifyVulnMetadataVulnerabilityMetaData) GetSummary() *string { return v.Summary }
+
+// GetVulnerability returns AllCertifyVulnMetadataVulnerabilityMetaData.Vulnerability, and is useful for accessing the field via an interface.
+func (v *AllCertifyVulnMetadataVulnerabilityMetaData) GetVulnerability() *string {
+	return v.Vulnerability
+}
+
+// GetSeverity returns AllCertifyVulnMetadataVulnerabilityMetaData.Severity, and is useful for accessing the field via an interface.
+func (v *AllCertifyVulnMetadataVulnerabilityMetaData) GetSeverity() *string { return v.Severity }
+
+// GetFixedVersion returns AllCertifyVulnMetadataVulnerabilityMetaData.FixedVersion, and is useful for accessing the field via an interface.
+func (v *AllCertifyVulnMetadataVulnerabilityMetaData) GetFixedVersion() *string {
+	return v.FixedVersion
+}
 
 // AllCertifyVulnPackage includes the requested fields of the GraphQL type Package.
 // The GraphQL type's documentation follows.
@@ -1903,15 +1932,21 @@ func (v *AllPkgTreeNamespacesPackageNamespaceNamesPackageName) GetVersions() []A
 // are a subset of the qualifier of the other also mean two different packages in
 // the trie.
 type AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersion struct {
-	Id         string                                                                                                 `json:"id"`
-	Version    string                                                                                                 `json:"version"`
-	Qualifiers []AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersionQualifiersPackageQualifier `json:"qualifiers"`
-	Subpath    string                                                                                                 `json:"subpath"`
+	Id            string                                                                                                 `json:"id"`
+	ApplicationId []string                                                                                               `json:"applicationId"`
+	Version       string                                                                                                 `json:"version"`
+	Qualifiers    []AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersionQualifiersPackageQualifier `json:"qualifiers"`
+	Subpath       string                                                                                                 `json:"subpath"`
 }
 
 // GetId returns AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersion.Id, and is useful for accessing the field via an interface.
 func (v *AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersion) GetId() string {
 	return v.Id
+}
+
+// GetApplicationId returns AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersion.ApplicationId, and is useful for accessing the field via an interface.
+func (v *AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersion) GetApplicationId() []string {
+	return v.ApplicationId
 }
 
 // GetVersion returns AllPkgTreeNamespacesPackageNamespaceNamesPackageNameVersionsPackageVersion.Version, and is useful for accessing the field via an interface.
@@ -17506,12 +17541,13 @@ func (v *PkgEqualResponse) GetIngestPkgEqual() PkgEqualIngestPkgEqual { return v
 // This is different than PkgSpec because we want to encode mandatory fields:
 // type and name. All optional fields are given empty default values.
 type PkgInputSpec struct {
-	Type       string                      `json:"type"`
-	Namespace  *string                     `json:"namespace"`
-	Name       string                      `json:"name"`
-	Version    *string                     `json:"version"`
-	Qualifiers []PackageQualifierInputSpec `json:"qualifiers"`
-	Subpath    *string                     `json:"subpath"`
+	Type          string                      `json:"type"`
+	Namespace     *string                     `json:"namespace"`
+	Name          string                      `json:"name"`
+	Version       *string                     `json:"version"`
+	ApplicationId []string                    `json:"applicationId"`
+	Qualifiers    []PackageQualifierInputSpec `json:"qualifiers"`
+	Subpath       *string                     `json:"subpath"`
 }
 
 // GetType returns PkgInputSpec.Type, and is useful for accessing the field via an interface.
@@ -17525,6 +17561,9 @@ func (v *PkgInputSpec) GetName() string { return v.Name }
 
 // GetVersion returns PkgInputSpec.Version, and is useful for accessing the field via an interface.
 func (v *PkgInputSpec) GetVersion() *string { return v.Version }
+
+// GetApplicationId returns PkgInputSpec.ApplicationId, and is useful for accessing the field via an interface.
+func (v *PkgInputSpec) GetApplicationId() []string { return v.ApplicationId }
 
 // GetQualifiers returns PkgInputSpec.Qualifiers, and is useful for accessing the field via an interface.
 func (v *PkgInputSpec) GetQualifiers() []PackageQualifierInputSpec { return v.Qualifiers }
@@ -23960,6 +23999,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24035,6 +24075,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24167,6 +24208,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24248,6 +24290,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24329,6 +24372,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24372,6 +24416,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment AllOSVTree on OSV {
@@ -24438,6 +24487,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24480,6 +24530,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment AllCveTree on CVE {
@@ -24567,6 +24622,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24642,6 +24698,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24774,6 +24831,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24840,6 +24898,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24878,6 +24937,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment AllCveTree on CVE {
@@ -24947,6 +25011,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -24989,6 +25054,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment AllCveTree on CVE {
@@ -25119,6 +25189,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -25180,6 +25251,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -25271,6 +25343,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -25425,6 +25498,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -25505,6 +25579,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -25645,6 +25720,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -25923,6 +25999,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -26161,6 +26238,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment allIsVulnerability on IsVulnerability {
@@ -26326,6 +26408,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -26564,6 +26647,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment allIsVulnerability on IsVulnerability {
@@ -26727,6 +26815,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -26965,6 +27054,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment allIsVulnerability on IsVulnerability {
@@ -27101,6 +27195,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -27223,6 +27318,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -27461,6 +27557,11 @@ fragment AllCertifyVuln on CertifyVuln {
 		timeScanned
 		origin
 		collector
+		details
+		summary
+		vulnerability
+		severity
+		fixedVersion
 	}
 }
 fragment allIsVulnerability on IsVulnerability {
@@ -27570,6 +27671,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -27846,6 +27948,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -28002,6 +28105,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -28116,6 +28220,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -28231,6 +28336,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -28306,6 +28412,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
@@ -28421,6 +28528,7 @@ fragment AllPkgTree on Package {
 			name
 			versions {
 				id
+				applicationId
 				version
 				qualifiers {
 					key
