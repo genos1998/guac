@@ -3756,6 +3756,7 @@ input PkgSpec {
   qualifiers: [PackageQualifierSpec!] = []
   matchOnlyEmptyQualifiers: Boolean = false
   subpath: String
+  applicationId: [String!] = []
 }
 
 """

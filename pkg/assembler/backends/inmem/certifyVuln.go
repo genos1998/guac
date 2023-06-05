@@ -598,7 +598,7 @@ func getCustomVulnerabilityDetails(vulnerabilityString string) (OSVApiVulnerabil
 
 }
 
-func containsVersion(versions []string, target string) bool {
+func containsElement(versions []string, target string) bool {
 	for _, v := range versions {
 		if v == target {
 			return true
@@ -612,7 +612,7 @@ func getFixedVersion(osvData OSVApiVulnerability, pkgVersion string) string {
 		return ""
 	}
 	for i := range osvData.Affected {
-		if containsVersion(osvData.Affected[i].Versions, pkgVersion) {
+		if containsElement(osvData.Affected[i].Versions, pkgVersion) {
 			for _, ranges := range osvData.Affected[i].Ranges {
 				for _, event := range ranges.Events {
 					if event.Fixed != "" {

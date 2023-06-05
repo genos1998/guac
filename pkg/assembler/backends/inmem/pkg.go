@@ -516,6 +516,9 @@ func buildPkgVersion(pkgVersionStruct *pkgVersionStruct, filter *model.PkgSpec) 
 		if filter != nil && noMatchQualifiers(filter, v.qualifiers) {
 			continue
 		}
+		if filter != nil && noMatchApplicationId(filter, v.applicationId) {
+			continue
+		}
 		pvs = append(pvs, &model.PackageVersion{
 			ID:            nodeID(v.id),
 			ApplicationID: v.applicationId,
@@ -702,6 +705,18 @@ func noMatchQualifiers(filter *model.PkgSpec, v map[string]string) bool {
 	if filter.Qualifiers != nil && len(filter.Qualifiers) > 0 {
 		filterQualifiers := getQualifiersFromFilter(filter.Qualifiers)
 		return !reflect.DeepEqual(v, filterQualifiers)
+	}
+	return false
+}
+
+func noMatchApplicationId(filter *model.PkgSpec, appIds []string) bool {
+	if filter.ApplicationID != nil && len(filter.ApplicationID) > 0 {
+		for i := range filter.ApplicationID {
+			if containsElement(appIds, filter.ApplicationID[i]) {
+				return false
+			}
+		}
+		return true
 	}
 	return false
 }

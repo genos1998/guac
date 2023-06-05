@@ -955,8 +955,11 @@ func (ec *executionContext) unmarshalInputPkgSpec(ctx context.Context, obj inter
 	if _, present := asMap["matchOnlyEmptyQualifiers"]; !present {
 		asMap["matchOnlyEmptyQualifiers"] = false
 	}
+	if _, present := asMap["applicationId"]; !present {
+		asMap["applicationId"] = []interface{}{}
+	}
 
-	fieldsInOrder := [...]string{"id", "type", "namespace", "name", "version", "qualifiers", "matchOnlyEmptyQualifiers", "subpath"}
+	fieldsInOrder := [...]string{"id", "type", "namespace", "name", "version", "qualifiers", "matchOnlyEmptyQualifiers", "subpath", "applicationId"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -1035,6 +1038,15 @@ func (ec *executionContext) unmarshalInputPkgSpec(ctx context.Context, obj inter
 				return it, err
 			}
 			it.Subpath = data
+		case "applicationId":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("applicationId"))
+			data, err := ec.unmarshalOString2ᚕstringᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ApplicationID = data
 		}
 	}
 

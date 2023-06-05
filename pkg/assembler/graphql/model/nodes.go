@@ -959,6 +959,7 @@ type PkgSpec struct {
 	Qualifiers               []*PackageQualifierSpec `json:"qualifiers,omitempty"`
 	MatchOnlyEmptyQualifiers *bool                   `json:"matchOnlyEmptyQualifiers,omitempty"`
 	Subpath                  *string                 `json:"subpath,omitempty"`
+	ApplicationID            []string                `json:"applicationId,omitempty"`
 }
 
 // SLSA contains all of the fields present in a SLSA attestation.

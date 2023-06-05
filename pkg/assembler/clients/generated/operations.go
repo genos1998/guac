@@ -17601,6 +17601,7 @@ type PkgSpec struct {
 	Qualifiers               []PackageQualifierSpec `json:"qualifiers"`
 	MatchOnlyEmptyQualifiers *bool                  `json:"matchOnlyEmptyQualifiers"`
 	Subpath                  *string                `json:"subpath"`
+	ApplicationId            []string               `json:"applicationId"`
 }
 
 // GetId returns PkgSpec.Id, and is useful for accessing the field via an interface.
@@ -17626,6 +17627,9 @@ func (v *PkgSpec) GetMatchOnlyEmptyQualifiers() *bool { return v.MatchOnlyEmptyQ
 
 // GetSubpath returns PkgSpec.Subpath, and is useful for accessing the field via an interface.
 func (v *PkgSpec) GetSubpath() *string { return v.Subpath }
+
+// GetApplicationId returns PkgSpec.ApplicationId, and is useful for accessing the field via an interface.
+func (v *PkgSpec) GetApplicationId() []string { return v.ApplicationId }
 
 // SLSAForArtifactIngestArtifact includes the requested fields of the GraphQL type Artifact.
 // The GraphQL type's documentation follows.
