@@ -351,6 +351,7 @@ type CertifyVulnSpec struct {
 	ScannerVersion *string            `json:"scannerVersion,omitempty"`
 	Origin         *string            `json:"origin,omitempty"`
 	Collector      *string            `json:"collector,omitempty"`
+	Severity       *string            `json:"severity,omitempty"`
 }
 
 // CveOrGhsaInput allows using CveOrGhsa union as input type for mutations.

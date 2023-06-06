@@ -2774,6 +2774,7 @@ input CertifyVulnSpec {
   scannerVersion: String
   origin: String
   collector: String
+  severity: String
 }
 
 """

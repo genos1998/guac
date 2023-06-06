@@ -807,7 +807,7 @@ func (ec *executionContext) unmarshalInputCertifyVulnSpec(ctx context.Context, o
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "package", "vulnerability", "timeScanned", "dbUri", "dbVersion", "scannerUri", "scannerVersion", "origin", "collector"}
+	fieldsInOrder := [...]string{"id", "package", "vulnerability", "timeScanned", "dbUri", "dbVersion", "scannerUri", "scannerVersion", "origin", "collector", "severity"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -904,6 +904,15 @@ func (ec *executionContext) unmarshalInputCertifyVulnSpec(ctx context.Context, o
 				return it, err
 			}
 			it.Collector = data
+		case "severity":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("severity"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Severity = data
 		}
 	}
 
